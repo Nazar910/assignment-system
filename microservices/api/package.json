@@ -1,0 +1,29 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "Nazarii Pyvovar (https://github.com/Nazar910)",
+  "license": "MIT",
+  "dependencies": {
+    "@nazar910/rpc-module": "0.0.2",
+    "@types/node": "^10.11.4",
+    "amqplib": "^0.5.2",
+    "inversify": "^4.13.0",
+    "nconf": "^0.10.0",
+    "nodemon": "^1.18.4",
+    "reflect-metadata": "^0.1.12",
+    "restify": "^7.2.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/nconf": "0.0.37",
+    "ts-node": "^7.0.1"
+  }
+}
