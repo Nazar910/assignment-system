@@ -6,12 +6,12 @@
             "es6", "dom"
         ],
         "types": [
-            "reflect-metadata"
+            "reflect-metadata", "node"
         ],
         "module": "commonjs",
         "moduleResolution": "node",
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
     },
     "include": [
         "src/**/*"

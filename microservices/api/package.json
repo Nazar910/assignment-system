@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "@nazar910/rpc-module": "0.0.2",
-    "@types/node": "^10.11.4",
     "amqplib": "^0.5.2",
     "inversify": "^4.13.0",
     "nconf": "^0.10.0",
@@ -24,6 +23,7 @@
   },
   "devDependencies": {
     "@types/nconf": "0.0.37",
+    "@types/node": "^10.11.5",
     "ts-node": "^7.0.1"
   }
 }
