@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:unit": "NODE_ENV=test mocha -r ts-node/register --opts ./test/unit/mocha.opts"
+    "test:unit": "NODE_ENV=test mocha -r ts-node/register --opts ./test/unit/mocha.opts",
+    "test": "npm run test:unit"
   },
   "keywords": [],
   "author": "",
