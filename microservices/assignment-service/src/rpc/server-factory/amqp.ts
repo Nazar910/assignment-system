@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
 import IConfig from '../../config/interface';
+import IConfigFactory from '../../config/factory/interface';
 import TYPES from '../../types';
 import IRpcServerFactory from './interface';
-import { RpcModule } from '../modules/interfaces';
+import { RpcModule } from '../../modules/interfaces';
 import IRpcServer from '../server/interface';
 
 @injectable()
@@ -11,10 +12,10 @@ class AmqpRpcServerFactory implements IRpcServerFactory {
     private _config: IConfig;
     private _rpcModule: RpcModule;
     constructor(
-        @inject(TYPES.Config) config: IConfig,
+        @inject(TYPES.Config) configFactory: IConfigFactory,
         @inject(TYPES.RpcModule) rpcModule
     ) {
-        this._config = config;
+        this._config = configFactory.getConfig();
         this._rpcModule = rpcModule;
     }
 
