@@ -4,13 +4,12 @@ import IConfigMock from '../helpers/IConfigMock';
 import IConfigFactory from '../../../src/config/factory/interface';
 import IConfigFactoryMock from '../helpers/IConfigFactoryMock';
 import { mock, when, instance }  from 'ts-mockito';
-import AmqpRpcServerFactory from '../../../src/rpc/server-factory/amqp';
+import AmqpRpcServerFactory from '../../../src/rpc/server/factory/amqp';
 import IRpcServer from '../../../src/rpc/server/interface';
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 
 const RABBITMQ_URI = 'amqp://some-host.com';
-//TODO: stub rpcModule
 describe('AMQP RPC server factory', () => {
     let sandbox;
     beforeEach(() => {

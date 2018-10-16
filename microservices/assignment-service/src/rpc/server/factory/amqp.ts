@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
-import IConfig from '../../config/interface';
-import IConfigFactory from '../../config/factory/interface';
-import TYPES from '../../types';
+import IConfig from '../../../config/interface';
+import IConfigFactory from '../../../config/factory/interface';
+import TYPES from '../../../types';
 import IRpcServerFactory from './interface';
-import { RpcModule } from '../../modules/interfaces';
-import IRpcServer from '../server/interface';
+import { RpcModule } from '../../../modules/interfaces';
+import IRpcServer from '../interface';
 
 @injectable()
 class AmqpRpcServerFactory implements IRpcServerFactory {

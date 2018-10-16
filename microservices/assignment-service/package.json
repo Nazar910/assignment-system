@@ -15,6 +15,7 @@
     "@types/node": "^10.11.7",
     "amqplib": "^0.5.2",
     "inversify": "^4.13.0",
+    "mongoose": "^5.3.3",
     "nconf": "^0.10.0",
     "reflect-metadata": "^0.1.12",
     "typescript": "^3.1.3"
