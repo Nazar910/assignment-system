@@ -2,6 +2,7 @@ import IAssignmentService from "./interface";
 import { injectable, inject } from "inversify";
 import TYPES from '../../types';
 import IAssignmentRepo from "../../repos/assignment/interface";
+import * as assert from 'assert';
 
 @injectable()
 export default class AssignmentService implements IAssignmentService {
@@ -18,7 +19,10 @@ export default class AssignmentService implements IAssignmentService {
     }
 
     async findById(id: any) {
-        return {};
+        assert.ok(id, '"id" field is required');
+        assert.ok(typeof id === 'string', '"id" field should be a string');
+        const assignment = await this._assignmentRepo.findById(id);
+        return assignment;
     }
 
     async updateById(id: any, data: Object) {
