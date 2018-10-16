@@ -1,5 +1,5 @@
-import IConfigFactory from '../../../src/config/factory/interface';
-import IConfig from '../../../src/config/interface';
+import IConfigFactory from '../../../../../src/config/factory/interface';
+import IConfig from '../../../../../src/config/interface';
 
 export default class IConfigFactoryMock implements IConfigFactory {
     getConfig() {

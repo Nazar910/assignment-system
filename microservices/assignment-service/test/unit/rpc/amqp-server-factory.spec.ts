@@ -1,8 +1,8 @@
 import 'mocha';
 import IConfig from '../../../src/config/interface';
-import IConfigMock from '../helpers/IConfigMock';
+import IConfigMock from '../helpers/mocks/config';
 import IConfigFactory from '../../../src/config/factory/interface';
-import IConfigFactoryMock from '../helpers/IConfigFactoryMock';
+import IConfigFactoryMock from '../helpers/mocks/config/factory';
 import { mock, when, instance }  from 'ts-mockito';
 import AmqpRpcServerFactory from '../../../src/rpc/server/factory/amqp';
 import IRpcServer from '../../../src/rpc/server/interface';

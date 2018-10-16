@@ -1,4 +1,4 @@
-import IRepo from '../interface';
+import IAssignmentRepo from './interface';
 import { injectable, inject } from 'inversify';
 import TYPES from '../../types';
 import { NotFound } from '../../errors';
@@ -10,32 +10,30 @@ const PRIORITIES: Array<String> = [
     'urgent'
 ]
 
-function getAssignmentModel() {
-    return {
-        title: {
-            type: String,
-            required: true
-        },
-        description: String,
-        author_id: {
-            type: String,
-            required: true
-        },
-        assignees: [String],
-        priority: {
-            type: String,
-            enum: PRIORITIES
-        }
-    };
-}
+const assignmentSchema = {
+    title: {
+        type: String,
+        required: true
+    },
+    description: String,
+    author_id: {
+        type: String,
+        required: true
+    },
+    assignees: [String],
+    priority: {
+        type: String,
+        enum: PRIORITIES
+    }
+};
 
 @injectable()
-export default class MongoRepo implements IRepo {
+export default class Assignment implements IAssignmentRepo {
     private _Assignment;
     constructor(
         @inject(TYPES.Mongoose) mongoose
     ) {
-        const schema = new mongoose.Schema(getAssignmentModel());
+        const schema = new mongoose.Schema(assignmentSchema);
         this._Assignment = mongoose.model('Assignment', schema);
     }
     get Assignment() {
@@ -61,6 +59,6 @@ export default class MongoRepo implements IRepo {
     }
     async deleteById(id: string) {
         const assignment = await this.findById(id);
-        return assignment.remove();
+        await assignment.remove();
     }
 }

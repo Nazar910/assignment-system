@@ -1,4 +1,4 @@
-import IConfig from '../../../src/config/interface';
+import IConfig from '../../../../../src/config/interface';
 
 export default class IConfigMock implements IConfig {
     get(key: string): string {

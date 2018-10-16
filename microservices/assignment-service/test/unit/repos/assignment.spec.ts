@@ -2,8 +2,8 @@ import 'mocha';
 import * as sinon from 'sinon';
 import { expect } from 'chai';
 
-import IRepo from '../../../src/repos/interface';
-import AssignmentRepo from '../../../src/repos/mongo/assignment';
+import IAssignmentRepo from '../../../src/repos/assignment/interface';
+import AssignmentRepo from '../../../src/repos/assignment/impl';
 
 describe('mongo repo', () => {
     let sandbox;
@@ -53,7 +53,7 @@ describe('mongo repo', () => {
             }
         });
         it('should call SchemaStub', () => {
-            const repo: IRepo = new AssignmentRepo(mongoose);
+            const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
             expect(SchemaStub.callCount).to.be.equal(1);
             expect(SchemaStub.firstCall.args).to.eql([assignmentSchema]);
         });
@@ -86,13 +86,13 @@ describe('mongo repo', () => {
             }
         });
         it('should call find', async () => {
-            const repo: IRepo = new AssignmentRepo(mongoose);
+            const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
             await repo.findAll();
             expect(findStub.callCount).to.be.equal(1);
             expect(findStub.firstCall.args).to.have.lengthOf(0);
         });
         it('should return expected records', async () => {
-            const repo: IRepo = new AssignmentRepo(mongoose);
+            const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
             const actual = await repo.findAll();
             expect(actual).to.eql(expected);
         });
@@ -110,7 +110,7 @@ describe('mongo repo', () => {
                 }
             });
             it('should reject', async () => {
-                const repo: IRepo = new AssignmentRepo(mongoose);
+                const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
                 try {
                     await repo.findAll();
                 } catch (e) {
@@ -140,7 +140,7 @@ describe('mongo repo', () => {
             }
         });
         it('should call findOne', async () => {
-            const repo: IRepo = new AssignmentRepo(mongoose);
+            const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
             await repo.findById(12);
             expect(findOneStub.callCount).to.be.equal(1);
             expect(findOneStub.firstCall.args).to.eql([{
@@ -148,7 +148,7 @@ describe('mongo repo', () => {
             }]);
         });
         it('should return expected records', async () => {
-            const repo: IRepo = new AssignmentRepo(mongoose);
+            const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
             const actual = await repo.findById(12);
             expect(actual).to.eql(expected);
         });
@@ -166,7 +166,7 @@ describe('mongo repo', () => {
                 }
             });
             it('should reject', async () => {
-                const repo: IRepo = new AssignmentRepo(mongoose);
+                const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
                 try {
                     await repo.findById(1234);
                     throw new Error('Error should be thrown here');
@@ -189,7 +189,7 @@ describe('mongo repo', () => {
                 }
             });
             it('should reject', async () => {
-                const repo: IRepo = new AssignmentRepo(mongoose);
+                const repo: IAssignmentRepo = new AssignmentRepo(mongoose);
                 try {
                     await repo.findById(1234);
                     throw new Error('Error should be thrown here');
@@ -201,7 +201,7 @@ describe('mongo repo', () => {
     });
     describe('updateById', () => {
         let findByIdStub;
-        let repo: IRepo;
+        let repo: IAssignmentRepo;
         let saveStub;
         let assignment;
         beforeEach(() => {
@@ -248,6 +248,63 @@ describe('mongo repo', () => {
             expect(actual).to.eql({
                 ...assignment,
                 description: 'Some description'
+            });
+        });
+    });
+    describe('deleteById', () => {
+        let findByIdStub;
+        let repo: IAssignmentRepo;
+        let removeStub;
+        let assignment;
+        beforeEach(() => {
+            repo = new AssignmentRepo(mongoose);
+            removeStub = sandbox.stub().resolves();
+            assignment = {
+                remove: removeStub
+            };
+            findByIdStub = sandbox.stub(repo, 'findById')
+                .resolves(assignment);
+        });
+        it('should call findById', async () => {
+            await repo.deleteById(1);
+            expect(findByIdStub.callCount).to.be.equal(1);
+            expect(findByIdStub.firstCall.args).to.eql([1]);
+        });
+        describe('findById rejects', () => {
+            beforeEach(() => {
+                repo = new AssignmentRepo(mongoose);
+                removeStub = sandbox.stub().resolves();
+                findByIdStub = sandbox.stub(repo, 'findById')
+                    .rejects(new Error('Find by id error'));
+            });
+            it('should reject', async () => {
+                try {
+                    await repo.deleteById(1);
+                } catch (e) {
+                    expect(e.message).to.be.equal('Find by id error');
+                }
+            });
+        });
+        it('call remove', async () => {
+            await repo.deleteById(1);
+            expect(removeStub.callCount).to.be.equal(1);
+            expect(removeStub.firstCall.args).to.have.lengthOf(0);
+        });
+        describe('remove rejects', () => {
+            beforeEach(() => {
+                repo = new AssignmentRepo(mongoose);
+                removeStub = sandbox.stub().rejects(new Error('Remove error'));
+                findByIdStub = sandbox.stub(repo, 'findById')
+                    .resolves({
+                        remove: removeStub
+                    });
+            });
+            it('should reject', async () => {
+                try {
+                    await repo.deleteById(1);
+                } catch (e) {
+                    expect(e.message).to.be.equal('Remove error');
+                }
             });
         });
     });

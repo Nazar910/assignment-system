@@ -3,7 +3,8 @@ const TYPES = {
     Logger: Symbol('Logger'),
     RpcModule: Symbol('RpcModule'),
     Nconf: Symbol('Nconf'),
-    Mongoose: Symbol('Mongoose')
+    Mongoose: Symbol('Mongoose'),
+    AssignmentRepo: Symbol('AssignmentRepo')
 };
 
 export default TYPES;
