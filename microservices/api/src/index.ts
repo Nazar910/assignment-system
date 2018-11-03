@@ -1,13 +1,15 @@
-import container from './inversify.config';
+import { InversifyRestifyServer } from 'inversify-restify-utils';
+import ILogger from './logger/i-logger';
+import IConfig from './config/interface';
 import TYPES from './types';
-import IServer from './server/i-server';
+import container from './inversify.config';
 
-const server = container.get<IServer>(TYPES.Server);
+const server = new InversifyRestifyServer(container);
 
-export async function main() {
-    await server.start();
-}
+const config: IConfig = container.get<IConfig>(TYPES.Config);
+const API_PORT = config.get('API_PORT');
 
-if (!module.parent) {
-    main();
-}
+const logger: ILogger = container.get<ILogger>(TYPES.Logger);
+
+const app = server.build();
+app.listen(API_PORT, () => logger.info(`Server started on *:${API_PORT}`));

@@ -1,4 +1,4 @@
-import IUserService from './i-user';
+import IUserService from './interface';
 import { injectable } from 'inversify';
 
 @injectable()

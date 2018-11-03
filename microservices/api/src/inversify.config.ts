@@ -1,18 +1,26 @@
 import { Container } from 'inversify';
 import TYPES from './types';
-import IServer from './server/i-server';
-import RestifyServer from './server/restify-server';
-import IConfig from './config/i-config';
-import NconfConfig from './config/nconf';
+import IConfig from './config/interface';
+import NconfImpl from './config/nconf/impl';
 import ILogger from './logger/i-logger';
 import ConsoleLogger from './logger/console-logger';
-import IUserSevice from './service/i-user';
-import UserService from './service/user';
+import IAssignmentService from './service/assignment/interface';
+import AssignmentService from './service/assignment/impl';
+import { interfaces, TYPE } from 'inversify-restify-utils';
+import { AssignmentController } from './controller/assignment';
+import { RpcModule, NconfModule } from './interfaces';
+import * as rpcModule from '@nazar910/rpc-module';
+import * as nconf from 'nconf';
+import IRpcClient from './rpc/client/interface';
+import RpcClient from './rpc/client/impl';
 
 const container = new Container();
-container.bind<IServer>(TYPES.Server).to(RestifyServer);
-container.bind<IConfig>(TYPES.Config).to(NconfConfig);
+container.bind<NconfModule>(TYPES.NconfModule).toConstantValue(nconf);
+container.bind<IConfig>(TYPES.Config).to(NconfImpl).inSingletonScope();
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
-container.bind<IUserSevice>(TYPES.UserService).to(UserService);
+container.bind<RpcModule>(TYPES.RpcModule).toConstantValue(rpcModule);
+container.bind<IRpcClient>(TYPES.RpcClient).to(RpcClient);
+container.bind<interfaces.Controller>(TYPE.Controller).to(AssignmentController).whenTargetNamed('AssignmentController');
+container.bind<IAssignmentService>(TYPES.AssignmentService).to(AssignmentService);
 
 export default container;

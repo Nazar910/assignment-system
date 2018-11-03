@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:unit": "NODE_ENV=test mocha -r ts-node/register --opts ./test/unit/mocha.opts",
-    "test": "npm run test:unit"
+    "dev": "NODE_ENV=dev node -r ts-node/register ./src/index.ts",
+    "build": "tsc",
+    "start": "node ./build/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@nazar910/rpc-module": "0.0.4",
+    "@nazar910/rpc-module": "1.0.2",
     "@types/node": "^10.11.7",
+    "ajv": "^6.5.4",
     "amqplib": "^0.5.2",
     "inversify": "^4.13.0",
     "mongoose": "^5.3.3",

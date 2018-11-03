@@ -49,6 +49,7 @@ export default class Assignment implements IAssignmentRepo {
         return assignment;
     }
     async findAll() {
+        console.log('Repo find all');
         return this.Assignment.find();
     }
     async updateById(id: string, data: object) {

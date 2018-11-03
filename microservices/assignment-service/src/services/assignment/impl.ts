@@ -26,10 +26,17 @@ export default class AssignmentService implements IAssignmentService {
     }
 
     async updateById(id: any, data: Object) {
-        return {};
+        assert.ok(id, '"id" field is required');
+        assert.ok(typeof id === 'string', '"id" field should be a string');
+        assert.ok(data, '"data" field is required');
+        assert.ok(typeof data === 'object', '"data" field should be a string');
+        const assignment = await this._assignmentRepo.updateById(id, data);
+        return assignment;
     }
 
     async deleteById(id: any) {
-
+        assert.ok(id, '"id" field is required');
+        assert.ok(typeof id === 'string', '"id" field should be a string');
+        await this._assignmentRepo.deleteById(id);
     }
 }

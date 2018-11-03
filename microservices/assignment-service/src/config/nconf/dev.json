@@ -1,0 +1,7 @@
+{
+    "RABBITMQ_URI": "amqp://guest:guest@localhost:5672/assignment-system",
+    "ASSIGNMENT_QUEUES": {
+        "get-all": "get-all-assignments"
+    },
+    "MONGO_URI": "mongodb://localhost/assignment-system"
+}
