@@ -12,7 +12,7 @@ import IAssignmentRepo from './repos/assignment/interface';
 import AssignmentRepo from './repos/assignment/impl';
 import IAssignmentService from './services/assignment/interface';
 import AssignmentService from './services/assignment/impl';
-import IAssignmentRpcServer from './rpc/server/assignment/interface';
+import IRpcServer from './rpc/server/interface';
 import AssignmentRpcServer from './rpc/server/assignment/impl';
 
 const container = new Container();
@@ -21,7 +21,7 @@ container.bind<RpcModule>(TYPES.RpcModule).toConstantValue(rpcModule);
 container.bind<Mongoose>(TYPES.Mongoose).toConstantValue(mongoose);
 container.bind<IConfig>(TYPES.Config).to(Nconf);
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
-container.bind<IAssignmentRpcServer>(TYPES.AssignmentRpcServer).to(AssignmentRpcServer);
+container.bind<IRpcServer>(TYPES.RpcServer).to(AssignmentRpcServer);
 container.bind<IAssignmentRepo>(TYPES.AssignmentRepo).to(AssignmentRepo);
 container.bind<IAssignmentService>(TYPES.AssignmentService).to(AssignmentService);
 

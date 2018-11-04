@@ -2,7 +2,7 @@ const TYPES = {
     Config: Symbol('Config'),
     Logger: Symbol('Logger'),
     RpcModule: Symbol('RpcModule'),
-    AssignmentRpcServer: Symbol('AssignmentRpcServer'),
+    RpcServer: Symbol('RpcServer'),
     Nconf: Symbol('Nconf'),
     Mongoose: Symbol('Mongoose'),
     AssignmentRepo: Symbol('AssignmentRepo'),

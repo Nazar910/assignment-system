@@ -1,5 +1,6 @@
 import IAssignmentRepo from './interface';
 import { injectable, inject } from 'inversify';
+import 'reflect-metadata';
 import TYPES from '../../types';
 import { NotFound } from '../../errors';
 
@@ -49,7 +50,6 @@ export default class Assignment implements IAssignmentRepo {
         return assignment;
     }
     async findAll() {
-        console.log('Repo find all');
         return this.Assignment.find();
     }
     async updateById(id: string, data: object) {

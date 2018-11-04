@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "NODE_ENV=dev node -r ts-node/register ./src/index.ts",
     "build": "tsc",
-    "start": "node ./build/index.js"
+    "start": "node ./build/index.js",
+    "only-test": "mocha -r ts-node/register --inspect-brk ./test/unit/services/assignment.spec.ts",
+    "test:unit": "NODE_ENV=test mocha -r ts-node/register --opts ./test/unit/mocha.opts",
+    "test": "npm run test:unit",
+    "nodemon": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +20,7 @@
     "@types/node": "^10.11.7",
     "ajv": "^6.5.4",
     "amqplib": "^0.5.2",
-    "inversify": "^4.13.0",
+    "inversify": "^5.0.1",
     "mongoose": "^5.3.3",
     "nconf": "^0.10.0",
     "reflect-metadata": "^0.1.12",
@@ -27,6 +31,7 @@
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.5",
     "sinon": "^6.3.5",
     "ts-mockito": "^2.3.1",
     "ts-node": "^7.0.1"

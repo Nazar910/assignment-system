@@ -19,6 +19,7 @@
     "amqplib": "^0.5.2",
     "inversify": "^5.0.1",
     "inversify-restify-utils": "^3.4.0",
+    "morgan": "^1.9.1",
     "nconf": "^0.10.0",
     "reflect-metadata": "^0.1.12",
     "restify": "^7.2.1",

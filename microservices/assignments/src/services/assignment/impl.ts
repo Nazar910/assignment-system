@@ -3,6 +3,7 @@ import { injectable, inject } from "inversify";
 import TYPES from '../../types';
 import IAssignmentRepo from "../../repos/assignment/interface";
 import * as assert from 'assert';
+import 'reflect-metadata';
 
 @injectable()
 export default class AssignmentService implements IAssignmentService {
