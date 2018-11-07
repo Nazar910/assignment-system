@@ -1,0 +1,3 @@
+./test/integration/bootstrap.ts
+./test/integration/**/**.test.ts
+--exit

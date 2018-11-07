@@ -9,7 +9,8 @@
     "start": "node ./build/index.js",
     "only-test": "mocha -r ts-node/register --inspect-brk ./test/unit/services/assignment.spec.ts",
     "test:unit": "NODE_ENV=test mocha -r ts-node/register --opts ./test/unit/mocha.opts",
-    "test": "npm run test:unit",
+    "test:integration": "NODE_ENV=test mocha -r ts-node/register --opts ./test/integration/mocha.opts",
+    "test": "npm run test:unit && npm run test:integration",
     "nodemon": "nodemon"
   },
   "keywords": [],
@@ -17,14 +18,15 @@
   "license": "MIT",
   "dependencies": {
     "@nazar910/rpc-module": "1.0.2",
-    "@types/node": "^10.11.7",
+    "@types/node": "^10.12.2",
     "ajv": "^6.5.4",
     "amqplib": "^0.5.2",
     "inversify": "^5.0.1",
     "mongoose": "^5.3.3",
     "nconf": "^0.10.0",
     "reflect-metadata": "^0.1.12",
-    "typescript": "^3.1.3"
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.1.6"
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",

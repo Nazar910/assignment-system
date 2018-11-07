@@ -13,4 +13,8 @@ export default class AssignmentRepoMock implements IAssignmentRepo {
     async deleteById(id) {
 
     }
+
+    async create(data) {
+        return {};
+    }
 }

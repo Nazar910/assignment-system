@@ -4,40 +4,41 @@ import TYPES from '../../types';
 import IAssignmentRepo from "../../repos/assignment/interface";
 import * as assert from 'assert';
 import 'reflect-metadata';
+import { IAssignmentValidator } from "../../validation/ajv/interfaces";
 
 @injectable()
 export default class AssignmentService implements IAssignmentService {
-    private _assignmentRepo: IAssignmentRepo;
     constructor(
-        @inject(TYPES.AssignmentRepo) assignmentRepo: IAssignmentRepo
-    ) {
-        this._assignmentRepo = assignmentRepo;
-    }
+        @inject(TYPES.AssignmentRepo) private assignmentRepo: IAssignmentRepo,
+        @inject(TYPES.AssignmentValidator) private validator: IAssignmentValidator
+    ) { }
 
     async findAll() {
-        const assignments = await this._assignmentRepo.findAll();
+        const assignments = await this.assignmentRepo.findAll();
         return assignments;
     }
 
     async findById(id: any) {
         assert.ok(id, '"id" field is required');
         assert.ok(typeof id === 'string', '"id" field should be a string');
-        const assignment = await this._assignmentRepo.findById(id);
+        const assignment = await this.assignmentRepo.findById(id);
         return assignment;
     }
 
+    async create(data: object) {
+        this.validator.create(data);
+        return this.assignmentRepo.create(data);
+    }
+
     async updateById(id: any, data: Object) {
-        assert.ok(id, '"id" field is required');
-        assert.ok(typeof id === 'string', '"id" field should be a string');
-        assert.ok(data, '"data" field is required');
-        assert.ok(typeof data === 'object', '"data" field should be a string');
-        const assignment = await this._assignmentRepo.updateById(id, data);
+        this.validator.update(id, data);
+        const assignment = await this.assignmentRepo.updateById(id, data);
         return assignment;
     }
 
     async deleteById(id: any) {
         assert.ok(id, '"id" field is required');
         assert.ok(typeof id === 'string', '"id" field should be a string');
-        await this._assignmentRepo.deleteById(id);
+        await this.assignmentRepo.deleteById(id);
     }
 }

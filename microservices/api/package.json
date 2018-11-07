@@ -4,7 +4,7 @@
   "description": "",
   "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "build": "tsc",
     "dev": "NODE_ENV=dev node -r ts-node/register ./src/index.ts",
     "nodemon": "nodemon",
@@ -17,6 +17,7 @@
     "@nazar910/rpc-module": "1.0.2",
     "@types/node": "^10.11.5",
     "amqplib": "^0.5.2",
+    "body-parser": "^1.18.3",
     "inversify": "^5.0.1",
     "inversify-restify-utils": "^3.4.0",
     "morgan": "^1.9.1",

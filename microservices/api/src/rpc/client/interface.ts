@@ -1,3 +1,3 @@
 export default interface RpcClient {
-    call(command: string, args?): Promise<any>;
+    call(command: string, ...args: any[]): Promise<any>;
 }

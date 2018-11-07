@@ -1,0 +1,11 @@
+{
+    "RABBITMQ_URI": "amqp://guest:guest@localhost:5672/assignment-system",
+    "USER_QUEUES": {
+        "get-all": "get-all-users",
+        "create": "create-user",
+        "get-by-id": "get-user-by-id",
+        "update-by-id": "update-user-by-id",
+        "delete-by-id": "delete-user-by-id"
+    },
+    "MONGO_URI": "mongodb://localhost/assignment-system"
+}

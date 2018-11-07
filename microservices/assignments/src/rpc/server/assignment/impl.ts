@@ -23,10 +23,25 @@ export default class RpcServer implements IRpcServer {
 
     async start() {
         await this.rpcServer.start();
-        // this.rpcServer.addHandler(this.ASSIGNMENT_QUEUES['create'], handler);
-        // this.rpcServer.addHandler(this.ASSIGNMENT_QUEUES['update-by-id'], handler);
-        this.rpcServer.addHandler(this.ASSIGNMENT_QUEUES['get-all'], () => this.assignmentService.findAll());
-        // this.rpcServer.addHandler(this.ASSIGNMENT_QUEUES['get-by-id'], handler);
-        // this.rpcServer.addHandler(this.ASSIGNMENT_QUEUES['delete-by-id'], handler);
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['create'],
+            (data) => this.assignmentService.create(data)
+        );
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['update-by-id'],
+            (id, data) => this.assignmentService.updateById(id, data)
+        );
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['get-all'],
+            () => this.assignmentService.findAll()
+        );
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['get-by-id'],
+            (id) => this.assignmentService.findById(id)
+        );
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['delete-by-id'],
+            (id) => this.assignmentService.deleteById(id)
+        );
     }
 }

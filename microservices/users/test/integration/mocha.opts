@@ -1,0 +1,3 @@
+./test/integration/bootstrap.js
+./test/integration/**/**.test.js
+--exit

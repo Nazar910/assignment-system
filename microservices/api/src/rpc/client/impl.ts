@@ -13,7 +13,7 @@ export default class RpcClient implements IRpcClient {
         this.rpcClient = AMQPRPCClient.create(config.get('RABBITMQ_URI'));
     }
 
-    async call(command: string, ...args) {
+    async call(command: string, ...args: any[]) {
         return this.rpcClient.call(command, ...args);
     }
 }

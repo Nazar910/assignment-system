@@ -21,4 +21,20 @@ export default class AssignmentService implements IAssignmentService {
     async getAll() {
         return this.rpcClient.call(this.ASSIGNMENT_QUEUES['get-all']);
     }
+
+    async getById(id: string) {
+        return this.rpcClient.call(this.ASSIGNMENT_QUEUES['get-by-id'], id);
+    }
+
+    async create(data: object) {
+        return this.rpcClient.call(this.ASSIGNMENT_QUEUES['create'], data);
+    }
+
+    async updateById(id: string, data: object) {
+        return this.rpcClient.call(this.ASSIGNMENT_QUEUES['update-by-id'], id, data);
+    }
+
+    async deleteById(id: string) {
+        return this.rpcClient.call(this.ASSIGNMENT_QUEUES['delete-by-id'], id);
+    }
 }

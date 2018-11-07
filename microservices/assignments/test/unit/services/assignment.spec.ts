@@ -7,11 +7,15 @@ import IAssignmentRepo from '../../../src/repos/assignment/interface';
 import AssignmentRepoMock from '../helpers/mocks/repos/assignment';
 
 import AssignmentService from '../../../src/services/assignment/impl';
+import { IAssignmentValidator } from '../../../src/validation/ajv/interfaces';
+import AssignmentValidator from '../helpers/mocks/validation/assignment';
 
 describe('Assignment service', () => {
     let service: IAssignmentService;
     let mockedRepo: IAssignmentRepo;
     let repoInstance: IAssignmentRepo;
+    let mockedValidator: IAssignmentValidator;
+    let validatorInstance: IAssignmentValidator;
     describe('findAll', () => {
         const assignments = [{
             title: 'Some title',
@@ -22,7 +26,9 @@ describe('Assignment service', () => {
             mockedRepo = mock(AssignmentRepoMock);
             when(mockedRepo.findAll()).thenResolve(assignments);
             repoInstance = instance(mockedRepo);
-            service = new AssignmentService(repoInstance);
+            mockedValidator = mock(AssignmentValidator);
+            validatorInstance = instance(mockedValidator);
+            service = new AssignmentService(repoInstance, validatorInstance);
         });
         it('should call assignmentRepo.findAll', async () => {
             await service.findAll();
@@ -37,7 +43,9 @@ describe('Assignment service', () => {
                 mockedRepo = mock(AssignmentRepoMock);
                 when(mockedRepo.findAll()).thenReject(new Error('repo.findAll error'));
                 repoInstance = instance(mockedRepo);
-                service = new AssignmentService(repoInstance);
+                mockedValidator = mock(AssignmentValidator);
+                validatorInstance = instance(mockedValidator);
+                service = new AssignmentService(repoInstance, validatorInstance);
             });
             it('should rejects', async () => {
                 try {
@@ -59,7 +67,9 @@ describe('Assignment service', () => {
             mockedRepo = mock(AssignmentRepoMock);
             when(mockedRepo.findById('123')).thenResolve(assignment);
             repoInstance = instance(mockedRepo);
-            service = new AssignmentService(repoInstance);
+            mockedValidator = mock(AssignmentValidator);
+            validatorInstance = instance(mockedValidator);
+            service = new AssignmentService(repoInstance, validatorInstance);
         });
         it('should call assignmentRepo.findById', async () => {
             await service.findById('123');
@@ -74,7 +84,9 @@ describe('Assignment service', () => {
                 mockedRepo = mock(AssignmentRepoMock);
                 when(mockedRepo.findById('123')).thenReject(new Error('assignmentRepo.findById error'));
                 repoInstance = instance(mockedRepo);
-                service = new AssignmentService(repoInstance);
+                mockedValidator = mock(AssignmentValidator);
+                validatorInstance = instance(mockedValidator);
+                service = new AssignmentService(repoInstance, validatorInstance);
             });
             it('should reject', async () => {
                 try {

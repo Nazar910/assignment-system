@@ -1,4 +1,4 @@
-import { Controller, Get, interfaces } from 'inversify-restify-utils';
+import { Controller, Get, interfaces, Post, Put, Delete } from 'inversify-restify-utils';
 import { injectable, inject } from 'inversify';
 import TYPES from '../types';
 import IAssignmentService from '../service/assignment/interface';
@@ -13,5 +13,30 @@ export class AssignmentController implements interfaces.Controller {
     @Get('/')
     private async getAll() {
         return this.assignmentService.getAll();
+    }
+
+    @Get('/:id')
+    private async getById(req) {
+        const { id } = req.params;
+        return this.assignmentService.getById(id);
+    }
+
+    @Post('/')
+    private async post(req) {
+        const { body } = req;
+        return this.assignmentService.create(body);
+    }
+
+    @Put('/:id')
+    private async put(req) {
+        const { body } = req;
+        const { id } = req.params;
+        return this.assignmentService.updateById(id, body);
+    }
+
+    @Delete('/:id')
+    private async delete(req) {
+        const { id } = req.params;
+        return this.assignmentService.deleteById(id);
     }
 }

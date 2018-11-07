@@ -3,30 +3,7 @@ import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
 import TYPES from '../../types';
 import { NotFound } from '../../errors';
-
-const PRIORITIES: Array<String> = [
-    'low',
-    'normal',
-    'high',
-    'urgent'
-]
-
-const assignmentSchema = {
-    title: {
-        type: String,
-        required: true
-    },
-    description: String,
-    author_id: {
-        type: String,
-        required: true
-    },
-    assignees: [String],
-    priority: {
-        type: String,
-        enum: PRIORITIES
-    }
-};
+import { PRIORITIES } from '../../schemas/assignment-schema';
 
 @injectable()
 export default class Assignment implements IAssignmentRepo {
@@ -34,6 +11,23 @@ export default class Assignment implements IAssignmentRepo {
     constructor(
         @inject(TYPES.Mongoose) mongoose
     ) {
+        const assignmentSchema = {
+            title: {
+                type: String,
+                required: true
+            },
+            description: String,
+            author_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true
+            },
+            assignees: [mongoose.Schema.Types.ObjectId],
+            priority: {
+                type: String,
+                enum: Object.values(PRIORITIES)
+            }
+        };
+
         const schema = new mongoose.Schema(assignmentSchema);
         this._Assignment = mongoose.model('Assignment', schema);
     }
@@ -51,6 +45,10 @@ export default class Assignment implements IAssignmentRepo {
     }
     async findAll() {
         return this.Assignment.find();
+    }
+    async create(data: object) {
+        const assignment = await this.Assignment.create(data);
+        return assignment;
     }
     async updateById(id: string, data: object) {
         const assignment = await this.findById(id);

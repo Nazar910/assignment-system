@@ -1,8 +1,24 @@
 version: '3'
 services:
+  assignments-service:
+    build:
+      context: .
+      dockerfile: microservices/assignments/Dockerfile
+    environment:
+      - NODE_ENV=dev
+
   api:
     build:
       context: .
       dockerfile: microservices/api/Dockerfile
+    environment:
+      - NODE_ENV=dev
     ports:
      - "5000:5000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: microservices/frontend/Dockerfile
+    ports:
+     - "8080:80"

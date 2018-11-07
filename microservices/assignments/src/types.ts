@@ -5,6 +5,7 @@ const TYPES = {
     RpcServer: Symbol('RpcServer'),
     Nconf: Symbol('Nconf'),
     Mongoose: Symbol('Mongoose'),
+    AssignmentValidator: Symbol('AssignmentValidator'),
     AssignmentRepo: Symbol('AssignmentRepo'),
     AssignmentService: Symbol('AssignmentService'),
     Ajv: Symbol('Ajv'),
