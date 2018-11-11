@@ -35,3 +35,7 @@ export async function getAssignmentById(id) {
 export async function createAssignment(data) {
     return (await instance.post('/assignments', data)).data;
 }
+
+export async function updateAssignmentById(id, data) {
+    return (await instance.put(`/assignments/${id}`, data)).data;
+}

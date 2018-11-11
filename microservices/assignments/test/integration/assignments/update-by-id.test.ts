@@ -11,7 +11,7 @@ describe('UPDATE-BY-ID', () => {
         title: 'Some updated title',
         description: 'Some updated description',
         author_id: helpers.genObjectId(),
-        assignees: [helpers.genObjectId()],
+        assignee_id: helpers.genObjectId(),
         priority: 'normal'
     };
     beforeEach(async () => {
@@ -74,34 +74,18 @@ describe('UPDATE-BY-ID', () => {
             });
         });
     });
-    describe('assignees', () => {
-        describe('is not a array', () => {
+    describe('assignee_id', () => {
+        describe('is not a string', () => {
             it('should throw ajv error', async () => {
                 try {
                     await rpcClient.call(
                         ASSIGNMENT_QUEUES['update-by-id'],
-                        await helpers.genObjectId(), _.set(_.clone(data), 'assignees', 'asd')
+                        await helpers.genObjectId(), _.set(_.clone(data), 'assignee_id', {})
                     );
                     expect.fail(null, null, 'Error should be thrown');
                 } catch (e) {
                     const [errMsg] = JSON.parse(e.message);
-                    expect(errMsg.dataPath).to.be.equal('.assignees');
-                    expect(errMsg.message).to.be.equal('should be array');
-                    expect(e.ajv_error).to.be.true;
-                }
-            });
-        });
-        describe('items is not a string', () => {
-            it('should throw ajv error', async () => {
-                try {
-                    await rpcClient.call(
-                        ASSIGNMENT_QUEUES['update-by-id'],
-                        await helpers.genObjectId(), _.set(_.clone(data), 'assignees', [{}])
-                    );
-                    expect.fail(null, null, 'Error should be thrown');
-                } catch (e) {
-                    const [errMsg] = JSON.parse(e.message);
-                    expect(errMsg.dataPath).to.be.equal('.assignees[0]');
+                    expect(errMsg.dataPath).to.be.equal('.assignee_id');
                     expect(errMsg.message).to.be.equal('should be string');
                     expect(e.ajv_error).to.be.true;
                 }
@@ -164,9 +148,8 @@ describe('UPDATE-BY-ID', () => {
             const dbRecord = await helpers.findOne('assignments', {_id: helpers.genObjectId(id)});
             expect(dbRecord.title).to.be.equal(data.title);
             expect(dbRecord.description).to.be.equal(data.description);
-            expect(dbRecord.assignees).to.have.lengthOf(1);
-            expect(dbRecord.assignees[0]).to.eql(data.assignees[0]);
-            expect(dbRecord.author_id).to.eql(data.author_id);
+            expect(String(dbRecord.assignee_id)).to.eql(String(data.assignee_id));
+            expect(String(dbRecord.author_id)).to.eql(String(data.author_id));
             expect(dbRecord.priority).to.be.equal(data.priority);
         })
     });

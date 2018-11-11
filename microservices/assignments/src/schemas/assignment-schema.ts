@@ -19,11 +19,8 @@ export const Assignment = {
         author_id: {
             type: 'string'
         },
-        assignees: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
+        assignee_id: {
+            type: 'string'
         },
         status: {
             type: 'string',

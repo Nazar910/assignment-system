@@ -1,7 +1,7 @@
 import React from 'react';
 import AssignmentList from './list';
 import AssignmentsHeader from './header';
-import { getAssignments, getAssignmentById, createAssignment } from '../api';
+import { getAssignments, getAssignmentById, createAssignment, updateAssignmentById } from '../api';
 
 class AssignmentsPage extends React.Component {
     constructor(...args) {
@@ -28,11 +28,20 @@ class AssignmentsPage extends React.Component {
         });
     }
 
+    async update(id, data) {
+        await updateAssignmentById(id, data);
+        const assignment = await getAssignmentById(id);
+        const { assignments } = this.state;
+        this.setState({
+            assignments: assignments.map(a => a._id === id ? assignment : a)
+        });
+    }
+
     render() {
         return (
             <div>
                 <AssignmentsHeader addAssignment={this.create.bind(this)}/>
-                <AssignmentList assignments={this.state.assignments}/>
+                <AssignmentList assignments={this.state.assignments} update={this.update.bind(this)}/>
             </div>
         )
     }

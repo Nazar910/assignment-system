@@ -22,7 +22,7 @@ export default class Assignment implements IAssignmentRepo {
                 type: mongoose.Schema.Types.ObjectId,
                 required: true
             },
-            assignees: [mongoose.Schema.Types.ObjectId],
+            assignee_id: mongoose.Schema.Types.ObjectId,
             status: String,
             priority: {
                 type: String,
@@ -59,14 +59,14 @@ export default class Assignment implements IAssignmentRepo {
             {
                 $lookup: {
                     from: 'users',
-                    localField: 'assignees',
+                    localField: 'assignee_id',
                     foreignField: '_id',
                     as: 'assignees'
                 }
             }
         ]);
-        //unmarshal array with one obj to just object
         [assignment.author] = assignment.authors;
+        [assignment.assignee] = assignment.assignees;
         if (!assignment) {
             throw new NotFound('No such assignment');
         }
@@ -85,15 +85,15 @@ export default class Assignment implements IAssignmentRepo {
             {
                 $lookup: {
                     from: 'users',
-                    localField: 'assignees',
+                    localField: 'assignee_id',
                     foreignField: '_id',
                     as: 'assignees'
                 }
             }
         ]);
-        //unmarshal array with one obj to just object
         return assignments.map(a => {
             [a.author] = a.authors;
+            [a.assignee] = a.assignees;
             return a;
         })
     }

@@ -11,7 +11,7 @@ describe('CREATE', () => {
         title: 'Some title',
         description: 'Some description',
         author_id: helpers.genObjectId(),
-        assignees: [helpers.genObjectId()],
+        assignee_id: helpers.genObjectId(),
         priority: 'low'
     };
     beforeEach(async () => {
@@ -105,33 +105,17 @@ describe('CREATE', () => {
         });
     });
     describe('assignees', () => {
-        describe('is not a array', () => {
+        describe('is not a string', () => {
             it('should throw ajv error', async () => {
                 try {
                     await rpcClient.call(
                         ASSIGNMENT_QUEUES['create'],
-                        _.set(_.clone(data), 'assignees', 'asd')
+                        _.set(_.clone(data), 'assignee_id', {})
                     );
                     expect.fail(null, null, 'Error should be thrown');
                 } catch (e) {
                     const [errMsg] = JSON.parse(e.message);
-                    expect(errMsg.dataPath).to.be.equal('.assignees');
-                    expect(errMsg.message).to.be.equal('should be array');
-                    expect(e.ajv_error).to.be.true;
-                }
-            });
-        });
-        describe('items is not a string', () => {
-            it('should throw ajv error', async () => {
-                try {
-                    await rpcClient.call(
-                        ASSIGNMENT_QUEUES['create'],
-                        _.set(_.clone(data), 'assignees', [{}])
-                    );
-                    expect.fail(null, null, 'Error should be thrown');
-                } catch (e) {
-                    const [errMsg] = JSON.parse(e.message);
-                    expect(errMsg.dataPath).to.be.equal('.assignees[0]');
+                    expect(errMsg.dataPath).to.be.equal('.assignee_id');
                     expect(errMsg.message).to.be.equal('should be string');
                     expect(e.ajv_error).to.be.true;
                 }
@@ -162,8 +146,7 @@ describe('CREATE', () => {
             const dbRecord = await helpers.findOne('assignments', {_id: helpers.genObjectId(record._id)});
             expect(dbRecord.title).to.be.equal(data.title);
             expect(dbRecord.description).to.be.equal(data.description);
-            expect(dbRecord.assignees).to.have.lengthOf(1);
-            expect(dbRecord.assignees[0]).to.eql(data.assignees[0]);
+            expect(String(dbRecord.assignee_id)).to.eql(String(data.assignee_id));
             expect(dbRecord.author_id).to.eql(data.author_id);
         })
     });
