@@ -1,10 +1,9 @@
 import React from 'react';
 import Login from './Login';
-import Register from './Register';
 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import AssignmentList from './AssignmentList';
+import AssignmentsPage from './assignments/page';
 
 import { getProfile } from './api'
 
@@ -60,12 +59,8 @@ class App extends React.Component {
                             <Login saveToken={this.login.bind(this)} />} />
                     <Route path="/assignments" render={() =>
                         this.state.loggedIn ?
-                            <AssignmentList/> :
+                            <AssignmentsPage /> :
                             <Redirect to="/" />} />
-                    <Route path="/register" render={() =>
-                        this.state.registered ?
-                            <Redirect to="/" /> :
-                            <Register registered={this.register.bind(this)} />} />
                 </Switch>
             </BrowserRouter>
         )

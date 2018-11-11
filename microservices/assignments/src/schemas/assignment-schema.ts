@@ -25,6 +25,10 @@ export const Assignment = {
                 type: 'string'
             }
         },
+        status: {
+            type: 'string',
+            default: 'todo'
+        },
         priority: {
             enum: Object.values(PRIORITIES)
         }

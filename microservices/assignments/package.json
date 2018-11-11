@@ -22,6 +22,7 @@
     "ajv": "^6.5.4",
     "amqplib": "^0.5.2",
     "inversify": "^5.0.1",
+    "lodash": "^4.17.11",
     "mongoose": "^5.3.3",
     "nconf": "^0.10.0",
     "reflect-metadata": "^0.1.12",

@@ -21,7 +21,8 @@ import { AssignmentValidator } from './validation/ajv/implementations';
 const container = new Container();
 container.bind<AjvType>(TYPES.Ajv).toConstantValue(new Ajv({
     removeAdditional: true,
-    coerceTypes: true
+    coerceTypes: true,
+    useDefaults: true
 }));
 container.bind<NconfModule>(TYPES.NconfModule).toConstantValue(nconf);
 container.bind<RpcModule>(TYPES.RpcModule).toConstantValue(rpcModule);

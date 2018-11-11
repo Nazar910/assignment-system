@@ -44,6 +44,27 @@ export async function cleanCollection(collectionName) {
     return collection.deleteMany({});
 }
 
+async function ensure(collectionName, data) {
+    const { db } = mongoose.connection;
+    const collection = await db.collection(collectionName);
+    const { insertedId } = await collection.insertOne(data);
+    return collection.findOne({ _id: insertedId });
+}
+
+export async function ensureUser(data?) {
+    const defaultData = {
+        email: 'user@example.com',
+        name: 'John',
+        lastName: 'Doe',
+        password: 'qwerty123',
+        role: 'admin'
+    };
+    return ensure('users', {
+        ...defaultData,
+        ...data
+    });
+}
+
 export async function ensureAssignment(data?) {
     const defaultData = {
         title: 'Some title',
@@ -52,11 +73,8 @@ export async function ensureAssignment(data?) {
         assignees: [genObjectId()],
         priority: 'low'
     };
-    const { db } = mongoose.connection;
-    const collection = await db.collection('assignments');
-    const { insertedId } = await collection.insertOne({
+    return ensure('assignments', {
         ...defaultData,
         ...data
-    });
-    return findOne('assignments', {_id: insertedId});
+    })
 }

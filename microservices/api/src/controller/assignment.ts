@@ -23,7 +23,9 @@ export class AssignmentController implements interfaces.Controller {
 
     @Post('/')
     private async post(req) {
-        const { body } = req;
+        const { body = {} } = req;
+        body.author_id = req.decoded._id;
+        console.log('Body', body);
         return this.assignmentService.create(body);
     }
 

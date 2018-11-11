@@ -23,3 +23,15 @@ export async function login(email, password) {
 export async function getProfile() {
     return instance.get('/users/profile');
 }
+
+export async function getAssignments() {
+    return (await instance.get('/assignments')).data;
+}
+
+export async function getAssignmentById(id) {
+    return (await instance.get(`/assignments/${id}`)).data;
+}
+
+export async function createAssignment(data) {
+    return (await instance.post('/assignments', data)).data;
+}

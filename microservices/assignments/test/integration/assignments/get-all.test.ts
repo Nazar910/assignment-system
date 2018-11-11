@@ -9,20 +9,43 @@ const rpcClient = helpers.getRpcClient();
 describe('GET-ALL', () => {
     beforeEach(async () => {
         await helpers.cleanCollection('assignments');
+        await helpers.cleanCollection('users');
     });
     after(async () => {
         await helpers.cleanCollection('assignments');
+        await helpers.cleanCollection('users');
     });
     it('should return stored documents', async () => {
-        const record = await helpers.ensureAssignment();
+        const author = await helpers.ensureUser({
+            email: 'author@example.com'
+        });
+        const assignee = await helpers.ensureUser({
+            email: 'assignee1@example.com'
+        });
+        const record1 = await helpers.ensureAssignment({
+            author_id: author._id,
+            assignees: [assignee._id]
+        });
+        const record2 = await helpers.ensureAssignment({
+            author_id: author._id,
+            assignees: [assignee._id]
+        });
         const assignments = await rpcClient.call(ASSIGNMENT_QUEUES['get-all']);
-        expect(assignments).to.have.lengthOf(1);
-        const [assignment] = assignments;
-        expect(String(record._id)).to.be.equal(assignment._id);
-        expect(String(record.author_id)).to.be.equal(assignment.author_id);
-        expect(record.assignees).to.have.lengthOf(assignment.assignees.length);
-        expect(record.assignees.map(a_id => String(a_id))).to.have.members(assignment.assignees);
-        expect(_.pick(record, ['title', 'description', 'priority'])).
-            to.eql(_.pick(assignment, ['title', 'description', 'priority']));
+        expect(assignments).to.have.lengthOf(2);
+        expect(String(record1._id)).to.be.equal(assignments[0]._id);
+        expect(String(record2._id)).to.be.equal(assignments[1]._id);
+        const [assignment1, assignment2] = assignments;
+        expect(String(assignment1.author._id)).to.be.equal(String(author._id));
+        expect(_.omit(assignment1.author, ['_id'])).to.eql(_.omit(author, ['_id']));
+        expect(String(assignment1.assignees[0]._id)).to.be.equal(String(assignee._id));
+        expect(_.omit(assignment1.assignees[0], ['_id'])).to.eql(_.omit(assignee, ['_id']));
+        expect(_.pick(record1, ['title', 'description', 'priority'])).
+            to.eql(_.pick(assignment1, ['title', 'description', 'priority']));
+        expect(String(assignment2.author._id)).to.be.equal(String(author._id));
+        expect(_.omit(assignment2.author, ['_id'])).to.eql(_.omit(author, ['_id']));
+        expect(String(assignment2.assignees[0]._id)).to.be.equal(String(assignee._id));
+        expect(_.omit(assignment2.assignees[0], ['_id'])).to.eql(_.omit(assignee, ['_id']));
+        expect(_.pick(record2, ['title', 'description', 'priority'])).
+            to.eql(_.pick(assignment2, ['title', 'description', 'priority']));
     });
 });
