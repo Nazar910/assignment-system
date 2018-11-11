@@ -21,7 +21,7 @@ export async function login(email, password) {
 }
 
 export async function getProfile() {
-    return instance.get('/users/profile');
+    return await (instance.get('/users/profile')).data;
 }
 
 export async function getAssignments() {

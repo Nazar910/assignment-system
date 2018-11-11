@@ -11,10 +11,8 @@ import { getProfile } from './api'
 class App extends React.Component {
     constructor(...args) {
         super(...args);
-
         this.state = {
-            loggedIn: false,
-            registered: false
+            loggedIn: false
         }
     }
 
@@ -31,15 +29,8 @@ class App extends React.Component {
         }
     }
 
-    register() {
-        this.setState({
-            registered: true
-        });
-    }
-
     login(token) {
         this.setState({ loggedIn: true });
-        console.log('About to save token', token);
         localStorage.setItem('token', token);
     }
 
