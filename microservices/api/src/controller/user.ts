@@ -14,13 +14,17 @@ export default class UserController {
     private async login(req, res, next) {
         const { body } = req;
         try {
-            const user = await this.userService.login(body.email, body.password);
-            return user;
+            return await this.userService.login(body.email, body.password);
         } catch (e) {
             if (e.login_fail) {
                 return next(new errs.UnauthorizedError(e.message));
             }
             throw e;
         }
+    }
+
+    @Get('/profile')
+    private async profile(req) {
+        return this.userService.profile(req.decoded._id);
     }
 }

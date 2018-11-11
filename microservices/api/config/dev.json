@@ -14,5 +14,6 @@
         "update-by-id": "update-user-by-id",
         "delete-by-id": "delete-user-by-id",
         "login": "user-login"
-    }
+    },
+    "JWT_SECRET": "3be7ebbccc5bd0790f4a6ddb666971fa"
 }

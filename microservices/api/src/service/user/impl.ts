@@ -8,11 +8,13 @@ import * as jwt from 'jsonwebtoken';
 @injectable()
 export default class UserService implements IUserService {
     private _USER_QUEUES;
+    private JWT_SECRET;
     constructor(
         @inject(TYPES.RpcClient) private rpcClient: IRpcClient,
         @inject(TYPES.Config) config: IConfig
     ) {
-        this._USER_QUEUES = config.get('USER_QUEUES')
+        this._USER_QUEUES = config.get('USER_QUEUES');
+        this.JWT_SECRET = config.get('JWT_SECRET');
     }
 
     get USER_QUEUES() {
@@ -24,7 +26,13 @@ export default class UserService implements IUserService {
     }
 
     async login(email: string, password: string) {
-        return this.rpcClient.call(this.USER_QUEUES['login'], email, password);
+        const user = await this.rpcClient.call(this.USER_QUEUES['login'], email, password);
+        return {
+            success: true,
+            token: jwt.sign(user, this.JWT_SECRET, {
+                expiresIn: '2 days'
+            })
+        }
     }
 
     async register(data: object) {

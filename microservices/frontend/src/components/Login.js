@@ -1,5 +1,5 @@
 import React from 'react';
-import { post } from './api';
+import { login } from './api';
 
 import { Link } from 'react-router-dom';
 
@@ -14,11 +14,7 @@ class Login extends React.Component {
 
     async onSubmit() {
         try {
-            const data = {
-                email: this.refs.email.value,
-                password: this.refs.password.value
-            };
-            const { token } = await post('/users/login', data);
+            const { token } = await login(this.refs.email.value, this.refs.password.value);
             this.props.saveToken(token);
         } catch (_) {
             console.error(_);

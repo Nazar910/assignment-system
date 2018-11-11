@@ -6,6 +6,8 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import AssignmentList from './AssignmentList';
 
+import { getProfile } from './api'
+
 
 class App extends React.Component {
     constructor(...args) {
@@ -18,16 +20,16 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        //call profile
-        // try {
-            // await api.users.getUserProfile();
-            //if success then token should already be in the local storage
-            // this.setState({
-                // loggedIn: true
-            // });
-        // } catch (_) {
-            //something
-        // }
+        try {
+            await getProfile();
+            this.setState({
+                loggedIn: true
+            });
+        } catch (_) {
+            this.setState({
+                loggedIn: false
+            });
+        }
     }
 
     register() {
@@ -38,6 +40,7 @@ class App extends React.Component {
 
     login(token) {
         this.setState({ loggedIn: true });
+        console.log('About to save token', token);
         localStorage.setItem('token', token);
     }
 
@@ -53,9 +56,9 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/" render={() =>
                         this.state.loggedIn ?
-                            <Redirect to="/editor" /> :
+                            <Redirect to="/assignments" /> :
                             <Login saveToken={this.login.bind(this)} />} />
-                    <Route path="/editor" render={() =>
+                    <Route path="/assignments" render={() =>
                         this.state.loggedIn ?
                             <AssignmentList/> :
                             <Redirect to="/" />} />

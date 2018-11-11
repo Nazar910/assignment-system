@@ -40,7 +40,7 @@ class UserService {
     whiteList(userData) {
         return this.lodash.pick(userData,
             [
-                'email', 'name', 'lastName',
+                '_id', 'email', 'name', 'lastName',
                 'nickName', 'role'
             ]
         );
