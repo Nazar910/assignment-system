@@ -8,5 +8,6 @@ module.exports = function getRpcServer(config, rpcModule, userService) {
         rpcServer.addHandler(USER_QUEUES['update-by-id'], (id, data) => userService.update(id, data));
         rpcServer.addHandler(USER_QUEUES['get-all'], () => userService.findAll());
         rpcServer.addHandler(USER_QUEUES['get-by-id'], (id) => userService.findById(id));
+        rpcServer.addHandler(USER_QUEUES['login'], (email, password) => userService.login(email, password));
     }
 }

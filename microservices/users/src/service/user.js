@@ -32,6 +32,11 @@ class UserService {
         return this.whiteList(user);
     }
 
+    async login(email, password) {
+        const user = await this.userRepo.login(email, password);
+        return this.whiteList(user);
+    }
+
     whiteList(userData) {
         return this.lodash.pick(userData,
             [

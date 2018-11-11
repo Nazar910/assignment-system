@@ -5,7 +5,8 @@
         "create": "create-user",
         "get-by-id": "get-user-by-id",
         "update-by-id": "update-user-by-id",
-        "delete-by-id": "delete-user-by-id"
+        "delete-by-id": "delete-user-by-id",
+        "login": "user-login"
     },
     "MONGO_URI": "mongodb://localhost/assignment-system-test"
 }

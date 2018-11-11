@@ -3,7 +3,8 @@ const { USER_ROLES } = require('../schemas/user');
 const userSchema = {
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name: {
         type: String,
@@ -50,6 +51,23 @@ class UserRepo {
 
     async findById(id) {
         return this.User.findById(id);
+    }
+
+    async login(email, password) {
+        const user = await this.User.findOne({
+            email
+        });
+        if (!user) {
+            const err = new Error('No user with such email');
+            err.login_fail = true;
+            throw err;
+        }
+        if (!this.bcryptjs.compareSync(password, user.password)) {
+            const err = new Error('Wrong password');
+            err.login_fail = true;
+            throw err;
+        }
+        return user;
     }
 }
 

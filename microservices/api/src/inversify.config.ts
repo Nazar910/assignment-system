@@ -13,6 +13,9 @@ import * as rpcModule from '@nazar910/rpc-module';
 import * as nconf from 'nconf';
 import IRpcClient from './rpc/client/interface';
 import RpcClient from './rpc/client/impl';
+import UserController from './controller/user';
+import IUserService from './service/user/interface';
+import UserService from './service/user/impl';
 
 const container = new Container();
 container.bind<NconfModule>(TYPES.NconfModule).toConstantValue(nconf);
@@ -20,6 +23,8 @@ container.bind<IConfig>(TYPES.Config).to(NconfImpl).inSingletonScope();
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
 container.bind<RpcModule>(TYPES.RpcModule).toConstantValue(rpcModule);
 container.bind<IRpcClient>(TYPES.RpcClient).to(RpcClient);
+container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed('UserController');
+container.bind<IUserService>(TYPES.UserService).to(UserService);
 container.bind<interfaces.Controller>(TYPE.Controller).to(AssignmentController).whenTargetNamed('AssignmentController');
 container.bind<IAssignmentService>(TYPES.AssignmentService).to(AssignmentService);
 

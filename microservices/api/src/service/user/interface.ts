@@ -1,6 +1,6 @@
 interface IUserService {
     login(email: string, password: string): Promise<object>
-    profile(): Promise<object>
+    profile(id: string): Promise<object>
     register(userData): Promise<object>
 }
 
