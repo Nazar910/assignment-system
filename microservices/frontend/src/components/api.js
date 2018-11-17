@@ -21,7 +21,7 @@ export async function login(email, password) {
 }
 
 export async function getProfile() {
-    return await (instance.get('/users/profile')).data;
+    return (await instance.get('/users/profile')).data;
 }
 
 export async function getAssignments() {
@@ -38,4 +38,8 @@ export async function createAssignment(data) {
 
 export async function updateAssignmentById(id, data) {
     return (await instance.put(`/assignments/${id}`, data)).data;
+}
+
+export async function getAssignees() {
+    return (await instance.get('/users')).data;
 }

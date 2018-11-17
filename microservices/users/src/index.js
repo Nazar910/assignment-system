@@ -7,7 +7,9 @@ async function main() {
     const config = container.$di.get(TYPES.Config);
     const mongoose = container.$di.get(TYPES.Mongoose);
     await mongoose.connect(config.get('MONGO_URI'), { useNewUrlParser: true });
+    console.log('Mongoose connected');
     await ensureAdminUser();
+    console.log('Ensured admin user');
     await initRpcServer();
     console.log('Inited consumers');
 }

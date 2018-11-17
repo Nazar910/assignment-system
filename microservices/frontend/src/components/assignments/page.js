@@ -1,20 +1,21 @@
 import React from 'react';
 import AssignmentList from './list';
 import AssignmentsHeader from './header';
-import { getAssignments, getAssignmentById, createAssignment, updateAssignmentById } from '../api';
+import { getAssignments, getAssignmentById, createAssignment, updateAssignmentById, getAssignees } from '../api';
 
 class AssignmentsPage extends React.Component {
     constructor(...args) {
         super(...args);
         this.state = {
-            assignments: []
+            assignments: [],
+            assignees: []
         };
     }
 
     async componentDidMount() {
-        const assignments = await getAssignments();
         this.setState({
-            assignments
+            assignments: await getAssignments(),
+            assignees: await getAssignees()
         });
     }
 
@@ -41,7 +42,11 @@ class AssignmentsPage extends React.Component {
         return (
             <div>
                 <AssignmentsHeader addAssignment={this.create.bind(this)}/>
-                <AssignmentList assignments={this.state.assignments} update={this.update.bind(this)}/>
+                <AssignmentList
+                    assignments={this.state.assignments}
+                    assignees={this.state.assignees}
+                    update={this.update.bind(this)}
+                />
             </div>
         )
     }

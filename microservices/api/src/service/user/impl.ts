@@ -38,4 +38,8 @@ export default class UserService implements IUserService {
     async register(data: object) {
         return this.rpcClient.call(this.USER_QUEUES['create'], data);
     }
+
+    async getUsers() {
+        return this.rpcClient.call(this.USER_QUEUES['get-all']);
+    }
 }

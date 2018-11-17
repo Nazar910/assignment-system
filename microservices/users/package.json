@@ -6,7 +6,8 @@
   "scripts": {
     "test:integration": "NODE_ENV=test mocha --opts ./test/integration/mocha.opts",
     "test": "npm run test:integration",
-    "dev": "NODE_ENV=dev nodemon",
+    "nodemon": "nodemon",
+    "dev": "NODE_ENV=dev node ./src/index.js",
     "start": "node ./src/index.js"
   },
   "dependencies": {

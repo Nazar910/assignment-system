@@ -38,20 +38,30 @@ class App extends React.Component {
         this.setState({
             loggedIn: false
         });
+        localStorage.setItem('token', undefined);
+    }
+
+    rootRoute(loggedIn) {
+        if (loggedIn) {
+            return <Redirect to="/assignments" />;
+        }
+        return <Login saveToken={this.login.bind(this)} />;
+    }
+
+    assignmentsRoute(loggedIn) {
+        if (loggedIn) {
+            return <AssignmentsPage />;
+        }
+        return <Redirect to="/" />;
     }
 
     render() {
+        const { loggedIn } = this.state;
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={() =>
-                        this.state.loggedIn ?
-                            <Redirect to="/assignments" /> :
-                            <Login saveToken={this.login.bind(this)} />} />
-                    <Route path="/assignments" render={() =>
-                        this.state.loggedIn ?
-                            <AssignmentsPage /> :
-                            <Redirect to="/" />} />
+                    <Route exact path="/" render={() => this.rootRoute(loggedIn)} />
+                    <Route path="/assignments" render={() => this.assignmentsRoute(loggedIn)} />
                 </Switch>
             </BrowserRouter>
         )

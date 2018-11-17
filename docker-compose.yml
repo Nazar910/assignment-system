@@ -6,6 +6,12 @@ services:
       dockerfile: microservices/assignments/Dockerfile
     environment:
       - NODE_ENV=dev
+  users-service:
+    build:
+      context: .
+      dockerfile: microservices/users/Dockerfile
+    environment:
+      - NODE_ENV=dev
 
   api:
     build:

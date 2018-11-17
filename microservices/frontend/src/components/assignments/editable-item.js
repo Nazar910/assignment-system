@@ -3,6 +3,7 @@ import React from 'react';
 let title = '';
 let description = '';
 let status = '';
+let assignee = '';
 
 const STATUSES = [
     'todo',
@@ -29,7 +30,8 @@ class EditableAssignmentItemView extends React.Component {
         await this.props.update({
             title: title.value.trim(),
             description: description.value.trim(),
-            status: status.value.trim()
+            status: status.value.trim(),
+            assignee_id: assignee.value
         });
     }
     render() {
@@ -40,6 +42,11 @@ class EditableAssignmentItemView extends React.Component {
                 <select ref={ node => { status = node } }>
                     {
                         STATUSES.map(s => <option key={s} value={s}>{s}</option>)
+                    }
+                </select>
+                <select ref={ node => { assignee = node } }>
+                    {
+                        (this.props.assignees || []).map(a => <option key={a._id} value={a._id}>{a.nickName}</option>)
                     }
                 </select>
                 <button>Save</button>

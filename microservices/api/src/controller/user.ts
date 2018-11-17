@@ -27,4 +27,9 @@ export default class UserController {
     private async profile(req) {
         return this.userService.profile(req.decoded._id);
     }
+
+    @Get('/')
+    private async getUsers() {
+        return this.userService.getUsers();
+    }
 }

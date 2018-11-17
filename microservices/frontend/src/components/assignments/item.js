@@ -28,7 +28,7 @@ class AssignmentItem extends React.Component {
                 <button onClick={this.toggleEdit.bind(this)}>Edit</button>
                 {
                     this.state.editable
-                        ? <EditableAssignmentItemView {...this.props.assignment} update={this.update.bind(this)} />
+                        ? <EditableAssignmentItemView {...this.props.assignment} update={this.update.bind(this)} assignees={this.props.assignees}/>
                         : <AssignmentItemView {...this.props.assignment} />
                 }
             </div>
@@ -46,7 +46,13 @@ AssignmentItem.propTypes = {
             lastName: PropTypes.string.isRequired,
             _id: PropTypes.string.isRequired,
             nickName: PropTypes.string.isRequired,
-        }).isRequired
+        }).isRequired,
+        assignee: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            lastName: PropTypes.string.isRequired,
+            _id: PropTypes.string.isRequired,
+            nickName: PropTypes.string.isRequired,
+        })
     }).isRequired,
     update: PropTypes.func.isRequired
 };
