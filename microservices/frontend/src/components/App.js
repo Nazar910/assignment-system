@@ -1,26 +1,31 @@
 import React from 'react';
 import Login from './Login';
 
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import AssignmentsPage from './assignments/page';
+import UsersPage from './users/page';
 
 import { getProfile } from './api'
-
 
 class App extends React.Component {
     constructor(...args) {
         super(...args);
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            currentUser: {}
         }
+        this.doAssignmentVisible = this.doAssignmentVisible.bind(this);
+        this.doUsersVisible = this.doUsersVisible.bind(this);
     }
 
     async componentDidMount() {
         try {
-            await getProfile();
+            const currentUser = await getProfile();
             this.setState({
-                loggedIn: true
+                loggedIn: true,
+                currentUser,
+                visible: ''
             });
         } catch (_) {
             this.setState({
@@ -41,27 +46,40 @@ class App extends React.Component {
         localStorage.setItem('token', undefined);
     }
 
-    rootRoute(loggedIn) {
+    doAssignmentVisible() {
+        this.setState({
+            visible: <AssignmentsPage />
+        });
+    }
+
+    doUsersVisible() {
+        this.setState({
+            visible: <UsersPage />
+        });
+    }
+
+    rootRoute(loggedIn, role) {
         if (loggedIn) {
-            return <Redirect to="/assignments" />;
+            return <div>
+                <button onClick={this.doAssignmentVisible}>Assignments</button>
+                {
+                    role && role === 'admin'
+                        ? <button onClick={this.doUsersVisible}>Users</button>
+                        : ''
+                }
+                { this.state.visible }
+            </div>;
         }
         return <Login saveToken={this.login.bind(this)} />;
     }
 
-    assignmentsRoute(loggedIn) {
-        if (loggedIn) {
-            return <AssignmentsPage />;
-        }
-        return <Redirect to="/" />;
-    }
-
     render() {
-        const { loggedIn } = this.state;
+        const { loggedIn, currentUser } = this.state;
+        console.log('Current', currentUser);
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/" render={() => this.rootRoute(loggedIn)} />
-                    <Route path="/assignments" render={() => this.assignmentsRoute(loggedIn)} />
+                    <Route exact path="/" render={() => this.rootRoute(loggedIn, currentUser.role)} />
                 </Switch>
             </BrowserRouter>
         )

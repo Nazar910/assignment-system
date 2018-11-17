@@ -22,6 +22,11 @@ export default class UserController {
             throw e;
         }
     }
+    @Post('/')
+    private async createUser(req, res, next) {
+        const { body } = req;
+        return await this.userService.create(body);
+    }
 
     @Get('/profile')
     private async profile(req) {
@@ -31,5 +36,19 @@ export default class UserController {
     @Get('/')
     private async getUsers() {
         return this.userService.getUsers();
+    }
+
+    @Get('/:id')
+    private async getById(req) {
+        const { id } = req.params;
+        return this.userService.profile(id);
+    }
+
+    @Delete('/:id')
+    private async deleteById(req, res) {
+        const { id } = req.params;
+        await this.userService.deleteById(id);
+        res.status(204);
+        res.send();
     }
 }

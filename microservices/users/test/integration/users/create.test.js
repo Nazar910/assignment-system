@@ -201,21 +201,6 @@ describe('CREATE', () => {
                 }
             });
         });
-        describe('is missing', () => {
-            it('should throw ajv error', async () => {
-                try {
-                    await rpcClient.call(
-                        USER_QUEUES['create'],
-                        _.omit(data, ['role'])
-                    );
-                    expect.fail(null, null, 'Error should be thrown');
-                } catch (e) {
-                    const [errMsg] = JSON.parse(e.message);
-                    expect(errMsg.message).to.be.equal('should have required property \'role\'');
-                    expect(e.ajv_error).to.be.true;
-                }
-            });
-        });
     });
     describe('all fields are valid', () => {
         it('should create db record', async () => {

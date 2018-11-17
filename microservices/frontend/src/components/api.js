@@ -43,3 +43,15 @@ export async function updateAssignmentById(id, data) {
 export async function getAssignees() {
     return (await instance.get('/users')).data;
 }
+
+export async function createUser(data) {
+    return (await instance.post('/users', data)).data;
+}
+
+export async function getUserById(id) {
+    return (await instance.get(`/users/${id}`)).data;
+}
+
+export async function deleteUserById(id) {
+    await instance.delete(`/users/${id}`);
+}

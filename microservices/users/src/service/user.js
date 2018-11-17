@@ -6,6 +6,7 @@ class UserService {
     }
 
     async create(data) {
+        data.role = data.role || 'assignee';
         this.validator.create(data);
         if (!data.nickName) {
             data.nickName = `${data.name} ${data.lastName}`;
@@ -35,6 +36,10 @@ class UserService {
     async login(email, password) {
         const user = await this.userRepo.login(email, password);
         return this.whiteList(user);
+    }
+
+    async deleteById(id) {
+        await this.userRepo.deleteById(id);
     }
 
     whiteList(userData) {

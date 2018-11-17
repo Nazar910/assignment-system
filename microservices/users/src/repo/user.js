@@ -53,6 +53,14 @@ class UserRepo {
         return this.User.findById(id);
     }
 
+    async deleteById(id) {
+        console.log('Aboutt tto call');
+        await this.User.findOneAndDelete({
+            _id: id
+        });
+        console.log('Called');
+    }
+
     async login(email, password) {
         const user = await this.User.findOne({
             email
