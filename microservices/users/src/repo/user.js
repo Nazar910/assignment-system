@@ -39,10 +39,17 @@ class UserRepo {
     }
 
     async update(id, data) {
-        const user = await this.User.findById(id);
-        Object.assign(user, data);
-        await user.save();
-        return user;
+        return this.User.findOneAndUpdate(
+            {
+                _id: id
+            },
+            {
+                $set: data
+            },
+            {
+                returnNew: true
+            }
+        );
     }
 
     async findAll() {
@@ -54,11 +61,9 @@ class UserRepo {
     }
 
     async deleteById(id) {
-        console.log('Aboutt tto call');
         await this.User.findOneAndDelete({
             _id: id
         });
-        console.log('Called');
     }
 
     async login(email, password) {

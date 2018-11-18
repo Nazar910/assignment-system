@@ -97,6 +97,36 @@ export default class Assignment implements IAssignmentRepo {
             return a;
         })
     }
+    async findByAssigneeId(assigneeId: string) {
+        const assignments = await this.Assignment.aggregate([
+            {
+                $match: {
+                    assignee_id: this.toObjectId(assigneeId)
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'author_id',
+                    foreignField: '_id',
+                    as: 'authors'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'assignee_id',
+                    foreignField: '_id',
+                    as: 'assignees'
+                }
+            }
+        ]);
+        return assignments.map(a => {
+            [a.author] = a.authors;
+            [a.assignee] = a.assignees;
+            return a;
+        });
+    }
     async create(data: object) {
         const assignment = await this.Assignment.create(data);
         return assignment;

@@ -41,4 +41,10 @@ export default class AssignmentService implements IAssignmentService {
         assert.ok(typeof id === 'string', '"id" field should be a string');
         await this.assignmentRepo.deleteById(id);
     }
+
+    async findByAssigneeId(assigneeId: string) {
+        assert.ok(assigneeId, '"assigneeId" field is required');
+        assert.ok(typeof assigneeId === 'string', '"assigneeId" field should be a string');
+        return this.assignmentRepo.findByAssigneeId(assigneeId);
+    }
 }

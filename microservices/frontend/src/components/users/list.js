@@ -17,7 +17,7 @@ class UserList extends React.Component {
                         u => <UserItem
                             key={u._id}
                             user={u}
-                            update={this.update}
+                            update={this.update.bind(this)}
                             delete={this.delete.bind(this)}
                         />
                     )

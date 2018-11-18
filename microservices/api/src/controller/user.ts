@@ -51,4 +51,12 @@ export default class UserController {
         res.status(204);
         res.send();
     }
+
+    @Put('/:id')
+    private async putById(req) {
+        const { id } = req.params;
+        const { body } = req;
+        console.log('Data is', body);
+        return this.userService.updateById(id, body);
+    }
 }

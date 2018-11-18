@@ -8,17 +8,51 @@ let lastName = '';
 let nickName = '';
 
 class UserForm extends React.Component {
+    constructor(...args) {
+        super(...args);
+        this.state = {
+            edit: false
+        };
+    }
+    componentDidMount() {
+        email.value = this.props.email || '';
+        name.value = this.props.name || '';
+        lastName.value = this.props.lastName || '';
+        nickName.value = this.props.nickName || '';
+        this.setState({
+            edit: true
+        });
+    }
     valid() {
+        if (!this.state.edit && !password.value.trim()) {
+            return;
+        }
+
         return email.value.trim()
-            && password.value.trim()
             && name.value.trim()
             && lastName.value.trim()
-            && nickName.value.trim()
+    }
+    cleanInputs() {
+        if (email) {
+            email.value = '';
+        }
+        if (name) {
+            name.value = '';
+        }
+        if (lastName) {
+            lastName.value = '';
+        }
+        if (nickName) {
+            nickName.value = '';
+        }
+        if (password) {
+            password.value = '';
+        }
     }
     async handleSubmit(e) {
         e.preventDefault()
         if (!this.valid()) {
-            return
+            return;
         }
         await this.props.onSubmit({
             email: email.value.trim(),
@@ -27,11 +61,7 @@ class UserForm extends React.Component {
             lastName: lastName.value.trim(),
             nickName: nickName.value.trim()
         });
-        email = '';
-        password = '';
-        name = '';
-        lastName = '';
-        nickName = '';
+        this.cleanInputs();
     }
     render() {
         return (
@@ -43,34 +73,29 @@ class UserForm extends React.Component {
                         ref={node => {
                             email = node
                         }}
-                        value={this.props.email}
                     /><br />
                     Password: <input
                         ref={node => {
                             password = node
                         }}
                         type="password"
-                        value={this.props.password}
                     /><br />
                     Name: <input
                         ref={node => {
                             name = node
                         }}
-                        value={this.props.name}
                     /><br />
                     LastName: <input
                         ref={node => {
                             lastName = node
                         }}
-                        value={this.props.lastName}
                     /><br />
                     NickName: <input
                         ref={node => {
                             nickName = node
                         }}
-                        value={this.props.nickName}
                     /><br />
-                    <button type="submit">Add User</button>
+                    <button type="submit">Save User</button>
                 </form>
             </div>
         )

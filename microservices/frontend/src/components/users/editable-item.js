@@ -8,7 +8,13 @@ class EditableAssignmentItemView extends React.Component {
     render() {
         return (
             <div>
-                <UserForm onSubmit={this.onSubmit.bind(this)} />
+                <UserForm
+                    onSubmit={this.handleSubmit.bind(this)}
+                    email={this.props.email}
+                    name={this.props.name}
+                    lastName={this.props.lastName}
+                    nickName={this.props.nickName}
+                />
             </div>
         )
     }

@@ -55,3 +55,7 @@ export async function getUserById(id) {
 export async function deleteUserById(id) {
     await instance.delete(`/users/${id}`);
 }
+
+export async function updateUserById(id, data) {
+    return (await instance.put(`/users/${id}`, data)).data;
+}

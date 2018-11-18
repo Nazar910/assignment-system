@@ -110,6 +110,15 @@ describe('UPDATE', () => {
                 }
             });
         });
+        describe('is missing', () => {
+            it('should accept it', async () => {
+                await rpcClient.call(
+                    USER_QUEUES['update-by-id'],
+                    String(helpers.genObjectId()),
+                    _.omit(data, ['password'])
+                );
+            });
+        });
     });
     describe('nickName', () => {
         describe('is not a string', () => {

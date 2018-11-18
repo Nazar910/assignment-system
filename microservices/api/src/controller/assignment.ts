@@ -11,21 +11,20 @@ export class AssignmentController implements interfaces.Controller {
     ) { }
 
     @Get('/')
-    private async getAll() {
-        return this.assignmentService.getAll();
+    private async getAll(req) {
+        return this.assignmentService.getAll(req.decoded);
     }
 
     @Get('/:id')
     private async getById(req) {
         const { id } = req.params;
-        return this.assignmentService.getById(id);
+        return this.assignmentService.getById(id, req.decoded);
     }
 
     @Post('/')
     private async post(req) {
         const { body = {} } = req;
         body.author_id = req.decoded._id;
-        console.log('Body', body);
         return this.assignmentService.create(body);
     }
 

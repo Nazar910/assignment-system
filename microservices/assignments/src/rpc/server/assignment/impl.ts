@@ -43,5 +43,9 @@ export default class RpcServer implements IRpcServer {
             this.ASSIGNMENT_QUEUES['delete-by-id'],
             (id) => this.assignmentService.deleteById(id)
         );
+        this.rpcServer.addHandler(
+            this.ASSIGNMENT_QUEUES['get-by-assignee-id'],
+            (assigneeId) => this.assignmentService.findByAssigneeId(assigneeId)
+        )
     }
 }

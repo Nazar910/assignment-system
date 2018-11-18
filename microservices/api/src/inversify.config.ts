@@ -22,7 +22,7 @@ container.bind<NconfModule>(TYPES.NconfModule).toConstantValue(nconf);
 container.bind<IConfig>(TYPES.Config).to(NconfImpl).inSingletonScope();
 container.bind<ILogger>(TYPES.Logger).to(ConsoleLogger);
 container.bind<RpcModule>(TYPES.RpcModule).toConstantValue(rpcModule);
-container.bind<IRpcClient>(TYPES.RpcClient).to(RpcClient);
+container.bind<IRpcClient>(TYPES.RpcClient).to(RpcClient).inSingletonScope();
 container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTargetNamed('UserController');
 container.bind<IUserService>(TYPES.UserService).to(UserService);
 container.bind<interfaces.Controller>(TYPE.Controller).to(AssignmentController).whenTargetNamed('AssignmentController');
