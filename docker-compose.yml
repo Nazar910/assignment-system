@@ -1,26 +1,47 @@
 version: '3'
 services:
+  compose-rabbitmq:
+    container_name: compose-rabbitmq
+    image: rabbitmq:3.7-management-alpine
+    hostname: compose-rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+  compose-mongodb:
+    container_name: compose-mongodb
+    image: mongo:latest
+    hostname: compose-mongodb
+    restart: always
   assignments-service:
     build:
       context: .
       dockerfile: microservices/assignments/Dockerfile
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=compose
+    depends_on:
+      - compose-rabbitmq
+      - compose-mongodb
   users-service:
     build:
       context: .
       dockerfile: microservices/users/Dockerfile
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=compose
+    depends_on:
+      - compose-rabbitmq
+      - compose-mongodb
 
   api:
     build:
       context: .
       dockerfile: microservices/api/Dockerfile
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=compose
+    depends_on:
+      - compose-rabbitmq
     ports:
-     - "5000:5000"
+     - "5000:8080"
 
   frontend:
     build:
@@ -28,3 +49,5 @@ services:
       dockerfile: microservices/frontend/Dockerfile
     ports:
      - "8080:80"
+    depends_on:
+      - api

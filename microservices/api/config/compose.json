@@ -1,0 +1,20 @@
+{
+    "RABBITMQ_URI": "amqp://admin:admin@compose-rabbitmq:5672/assignment-system",
+    "ASSIGNMENT_QUEUES": {
+        "get-all": "get-all-assignments",
+        "create": "create-assignment",
+        "get-by-id": "get-assignment-by-id",
+        "update-by-id": "update-assignment-by-id",
+        "delete-by-id": "delete-assignment-by-id",
+        "get-by-assignee-id": "get-assignments-by-assignee-id"
+    },
+    "USER_QUEUES": {
+        "get-all": "get-all-users",
+        "create": "create-user",
+        "get-by-id": "get-user-by-id",
+        "update-by-id": "update-user-by-id",
+        "delete-by-id": "delete-user-by-id",
+        "login": "user-login"
+    },
+    "JWT_SECRET": "3be7ebbccc5bd0790f4a6ddb666971fa"
+}

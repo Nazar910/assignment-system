@@ -1,0 +1,12 @@
+{
+    "RABBITMQ_URI": "amqp://admin:admin@compose-rabbitmq:5672/assignment-system",
+    "ASSIGNMENT_QUEUES": {
+        "get-all": "get-all-assignments",
+        "create": "create-assignment",
+        "get-by-id": "get-assignment-by-id",
+        "update-by-id": "update-assignment-by-id",
+        "delete-by-id": "delete-assignment-by-id",
+        "get-by-assignee-id": "get-assignments-by-assignee-id"
+    },
+    "MONGO_URI": "mongodb://compose-mongodb/assignment-system"
+}

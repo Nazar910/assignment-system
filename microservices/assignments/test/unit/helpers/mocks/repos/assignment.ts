@@ -17,4 +17,8 @@ export default class AssignmentRepoMock implements IAssignmentRepo {
     async create(data) {
         return {};
     }
+
+    async findByAssigneeId(id) {
+        return {};
+    }
 }
